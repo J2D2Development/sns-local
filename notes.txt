@@ -13,6 +13,5 @@ Other local apps get subscribe to updates?
 reinstall angular cli, eslint, stream-adventure
 
 NEXT
-1) TS working with express returning json.
-2) create simple server so i can test hitting my endpoints on 4455- hit a 'subscribe' should add info to subscribers.
-3) create typed subscribers.ts and so on- use aws docs as guide for setup.
+1) continue with publish route and function.  have it send a test message to fake subscribers (match real subscriber structure)
+    -start with http only for now

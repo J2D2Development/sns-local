@@ -1,7 +1,11 @@
 import * as express from 'express';
 
+// import routes
+import SubscribeRoute from './Routes/subscribe';
+
 class App {
   public express: express.Application;
+  private subscribeRoute: express.Router = SubscribeRoute;
   public subscribers: string[] = [];
 
   constructor () {
@@ -10,21 +14,16 @@ class App {
   }
 
   private mountRoutes (): void {
-    const router = express.Router()
-    router.get('/', (req, res) => {
+    const router: express.Router = express.Router();
+    router.get('/', (req, res): void => {
         res.json({
             home: true,
             msg: 'You reached the homepage'
         });
     });
-    router.get('/:topicName/:stage', (req, res) => {
-        res.json({
-            home: false,
-            topicName: req.params.topicName,
-            stage: req.params.stage
-        });
-    });
+
     this.express.use('/', router);
+    this.express.use('/subscribe', this.subscribeRoute);
   }
 }
 
