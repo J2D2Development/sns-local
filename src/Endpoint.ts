@@ -1,7 +1,12 @@
 // The endpoint that you want to receive notifications. Endpoints vary by protocol
-const {isEmail, isURL, isMobilePhone} = require('validator');
+import { isEmail, isURL, isMobilePhone } from 'validator';
 
 export default class Endpoint {
+    endpoint: string;
+    protocol: string;
+    topicArn: string;
+    type: string;
+
     constructor(endpoint, protocol, topicArn) {
         this.topicArn = topicArn;
     }
@@ -23,7 +28,7 @@ export default class Endpoint {
             // number?
             case 'sms':
                 //delivery of message via SMS
-                return isMobilePhone(this.protocol);
+                return isMobilePhone(this.protocol, 'any');
             // string?
 
             case 'sqs':

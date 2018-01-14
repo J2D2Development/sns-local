@@ -1,7 +1,7 @@
 import * as express from 'express';
 
 class App {
-  public express;
+  public express: express.Application;
   public subscribers: string[] = [];
 
   constructor () {
@@ -12,14 +12,12 @@ class App {
   private mountRoutes (): void {
     const router = express.Router()
     router.get('/', (req, res) => {
-        // res.sendFile('index.html', { root: __dirname });
         res.json({
             home: true,
             msg: 'You reached the homepage'
         });
     });
     router.get('/:topicName/:stage', (req, res) => {
-        // res.send(`You requested topic: ${req.params.topicName} and stage ${req.params.stage}`);
         res.json({
             home: false,
             topicName: req.params.topicName,

@@ -1,27 +1,33 @@
-const uuid = require('uuid/v4');
-const Subscriber = require('./Subscriber');
+import { v4 } from 'uuid';
+import Subscriber from './Subscriber';
 
 export default class Topic {
-    constructor(subscribers = []) {
-        this.id = uuid();
+    id: string;
+    arn: string;
+    subscribers: Subscriber[];
+
+    constructor(subscribers: Subscriber[] = []) {
+        this.id = v4();
         this.arn = 'should-this-be-generated';
         this.subscribers = subscribers;
     }
 
-    subscribe(endpoint, protocol, subscriber) {
+    subscribe(endpoint, protocol) {
         // create new subscriber
+        const newSubscriber = new Subscriber('test', 'endpoint', 'http', this.arn);
 
         // add sub to array
-        this.subscribers.push(subscriber);
+        this.subscribers.push(newSubscriber);
 
-        //return success/failure and send notification to subscriber with link for unsub if success 
+        //return success/failure and send notification to subscriber with link for unsub if success
+        console.log('you have subscribed'); 
     }
 
     unsubscribe(id) {
         // get the index of the sub to remove
-        const remove = this.subscribers.findIndex(subscriber => subscriber.id === id);
+        const remove = this.subscribers.map(s => s.id).indexOf(id);
 
-        if(!remove) {
+        if(!remove || remove === -1) {
             return `No subscriber with id ${id}`;
         }
 
@@ -29,7 +35,7 @@ export default class Topic {
         const removed = this.subscribers.splice(remove, 1);
 
         // fire confirmation message
-
+        console.log('unsubscribed!');
     }
 
     broadcast(payload) {
